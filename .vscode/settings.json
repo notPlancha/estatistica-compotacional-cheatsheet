@@ -1,0 +1,14 @@
+{
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.texcount.autorun": "never",
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "cmd": "tectonic ${file}",
+                "match": "\\.tex$"
+            }
+        ]
+    }
+    
+}
