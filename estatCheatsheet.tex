@@ -16,6 +16,7 @@
 \usepackage{tabularray}
 \usepackage[none]{hyphenat}
 \usepackage{titlesec}
+\usepackage{fixmath}
 % endregion
 \geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} % page margins
 \pagestyle{empty} % Turn off header and footer
@@ -44,7 +45,7 @@
 
 \begin{center}
   \Large{\textbf{Estatística Computacional}} \\
-  \small{Plancha; 105289; CDA2} \\
+  \small{Plancha; 105289; CDB2} \\
   \small{Versão 0.1}
 \end{center}
 
@@ -52,9 +53,9 @@
 
 \begin{tblr}{X c X[2]}\SetRow{m}
   Esperiência aleatória & & Processo de observação de fenómenos aleatórios \\
-  Fenómenos aleatórios & & Acontecimentos não determináveis \textit{à priori} \\ \SetRow{m} 
+  Fenómenos aleatórios & & Acontecimentos não determináveis \textit{a priori} \\ \SetRow{m} 
   Espaço de resultados & $\Omega$ & Conjunto de todos os resultados possíveis \\ \SetRow{m}
-  Acontecimentos & $A, B, C$ & Conjunto de possíveis resultados da experiência aleatória \\ \SetRow{m}
+  Acontecimentos & $A, B, C$ & Conjunto de possíveis resultados de uma experiência  \\ \SetRow{m}
   Resultado da experiência aleatória & $\omega$ & $A$ realizou-se se $\omega \in A$ 
 \end{tblr}
 
@@ -83,13 +84,55 @@ $$\Omega - B = \overline{B} = \{ \omega: \omega \in \Omega \land \omega \notin B
 \end{tblr}
 
 \subsection{Probabilidades}
+\textit{a priori}:
+$$P[A] = \frac{n_A}{N}$$
+\textit{a posteriori}:
+$$f_A = \frac{N_A}{N}$$
+$$P[A] = \lim_{N \to \infty} f_A$$
+\subsubsection{Definições}
+\begin{tblr}{l r}
+  $\overline{A}$ & $\Omega - A$ \\
+  $P[A]$ & Probabilidade de $A$ \\
+  $n_A$ & Número de resultados favoráveis a $A$ \\
+  $N$ & Número de resultados possíveis \\
+  $f_A$ & Frequência relativa de $A$ \\
+  $N_A$ & Número de vezes que A se verificou \\
+  $P[A \mid B]$ & Probabilidade de $A$ dado que $B$ se verificou \\
+\end{tblr}
+\subsubsection{Axiomas}
+$$\forall A \subseteq \Omega: 0 \leq P[A] \leq 1$$
+$$P[\Omega] = 1$$
+Independência/Acontecimentos mutualmente exclusivos:
+$$\forall A, B \subseteq \Omega \ni A \cap B = \emptyset: P[A \cup B] = P[A] + P[B]$$
+\subsubsection{Teoremas}
+\begin{align*}
+  &P[\overline{A}] = 1 - P[A] \\
+  &P[\emptyset] = 0 \\
+  &P[B-A] = P[B] - P[A \cap B] \\
+  &P[A \cup B] = P[A] + P[B] - P[A \cap B] \\
+  & P[A \cup B \cup C] = P[A] + P[B] + P[C] \\ 
+  &\qquad - P[A \cap B] - P[A \cap C] - P[B \cap C] \\ 
+  &\qquad + P[A \cap B \cap C] \\
+  &P[A \cup B] \leq P[A] + P[B] \\
+  &P[A \mid B] = \frac{P[A \cap B]}{P[B]} & \text{se} \; P[B] > 0 \\
+  &P[A \mid B] = 0 & \text{se} \; P[B] = 0
+\end{align*}
+Para acontecimentos independentes:
+\begin{align*}
+& P[A \cap B] = P[A] \cdot P[B] \\
+& P[A \mid B] = P[A]
+\end{align*}
+\subsubsection{$\mathbold{n}$ partições:} 
+$$\cup_{i=1}^n A_i = \Omega$$
+$$A_i \cap A_j = \emptyset$$
+$$P[A_i] > 0$$
+Teorema da Probabilidade total:
+$$\forall B \subseteq \Omega: P[B] = \sum_{i=1}^n P[A_i \cap B]$$
+$$\forall B \subseteq \Omega: P[B] = \sum_{i=1}^n P[A_i \mid B] \cdot P[B]$$
+Fórmula de Bayes:
+$$P[A_j \mid B] = \frac{P[A_j] \cdot P[B \mid A_j]}{\sum_{i=1}^n P[A_i] \cdot P[B \mid A_i]}$$
+\subsection{Variáveis aleatórias}
 TODO
-
-
-
-
-
-
 
 
 
