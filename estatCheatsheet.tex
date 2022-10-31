@@ -8,27 +8,22 @@
 \usepackage{hyperref}
 \usepackage{blindtext}
 \usepackage{xfrac}
+\usepackage{amsmath}
+\usepackage[portuguese]{babel}
+\usepackage[raggedrightboxes]{ragged2e}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularray}
+\usepackage[none]{hyphenat}
+\usepackage{titlesec}
 % endregion
-
 \geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} % page margins
 \pagestyle{empty} % Turn off header and footer
 \setcounter{secnumdepth}{0} % Don't print section numbers
-
 % region Redefine section commands to use less space
-\makeatletter
-\renewcommand{\section}{\@startsection{section}{1}{0mm}%
-                                {-1ex plus -.5ex minus -.2ex}%
-                                {0.5ex plus .2ex}%x
-                                {\normalfont\large\bfseries}}
-\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
-                                {-1explus -.5ex minus -.2ex}%
-                                {0.5ex plus .2ex}%
-                                {\normalfont\normalsize\bfseries}}
-\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
-                                {-1ex plus -.5ex minus -.2ex}%
-                                {1ex plus .2ex}%
-                                {\normalfont\small\bfseries}}
-\makeatother
+\titlespacing{\section}{0pt}{0pt}{0pt}
+\titlespacing{\subsection}{0pt}{0pt}{0pt}
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
 % endregion
 
 \setlength{\parindent}{0pt}
@@ -48,14 +43,69 @@
 \setlength{\columnsep}{2pt}
 
 \begin{center}
-     \Large{\textbf{Estatística Computacional}} \\
-     \small{Plancha; 105289; CDA2}
+  \Large{\textbf{Estatística Computacional}} \\
+  \small{Plancha; 105289; CDA2} \\
+  \small{Versão 0.1}
 \end{center}
 
-\section{Document classes}
+\section{Teoria de Probabilidades}
 
-\blindtext
+\begin{tblr}{X c X[2]}\SetRow{m}
+  Esperiência aleatória & & Processo de observação de fenómenos aleatórios \\
+  Fenómenos aleatórios & & Acontecimentos não determináveis \textit{à priori} \\ \SetRow{m} 
+  Espaço de resultados & $\Omega$ & Conjunto de todos os resultados possíveis \\ \SetRow{m}
+  Acontecimentos & $A, B, C$ & Conjunto de possíveis resultados da experiência aleatória \\ \SetRow{m}
+  Resultado da experiência aleatória & $\omega$ & $A$ realizou-se se $\omega \in A$ 
+\end{tblr}
+
+\subsection{Álgebra dos acontecimentos}
+\subsubsection{União}
+$$A \cup B = \{ \omega : \omega \in A \lor \omega \in B \}$$
+\subsubsection{Intersecção}
+$$A \cap B = \{ \omega: \omega \in A \land \omega \in B \}$$
+\subsubsection{Diferença}
+$$A - B = A \setminus B = \{ \omega: \omega \in A \land \omega \notin B \}$$
+$$\Omega - B = \overline{B} = \{ \omega: \omega \in \Omega \land \omega \notin B \}$$
+\subsubsection{Propriedades}
+\begin{tblr}{l r}
+  Comutativa & {$A \cup B = B \cup A$ \\ $A \cap B = B \cap A$} \\
+  Associativa & {$A \cup (B \cup C) = (A \cup B) \cup C$ \\ $A \cap (B \cap C) = (A \cap B) \cap C$} \\
+  Distributiva & {$A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ \\ $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$} \\
+  Idempotência & {$A \cup A = A$ \\ $A \cap A = A$} \\
+  Lei do Complemento & {$A \cup \overline{A} = \Omega$ \\ $A \cap \overline{A} = \emptyset$}
+\end{tblr} %column break
+\subsubsection{Probabilidades (Cont)}
+\begin{tblr}{l r}
+
+  Elemento Neutro & {$A \cup \emptyset = A$ \\ $A \cap \Omega = A$} \\
+  Elemento Absorvente & {$A \cup A = A$ \\ $A \cap \emptyset = \emptyset$} \\
+  Leis de Morgan & {$\overline{A \cup B} = \overline{A} \cap \overline{B}$ \\ $\overline{A \cap B} = \overline{A} \cup \overline{B}$}
+\end{tblr}
+
+\subsection{Probabilidades}
+TODO
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{temp}
+\blinddocument
 \end{multicols}
 \end{document}

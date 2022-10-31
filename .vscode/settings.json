@@ -8,7 +8,13 @@
                 "cmd": "tectonic ${file}",
                 "match": "\\.tex$"
             }
-        ]
+        ],
+        "autoClearConsole": true,
+        "shell": "pwsh"
+    },
+    "[tex]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
     }
     
 }
