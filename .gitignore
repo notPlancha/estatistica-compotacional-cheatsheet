@@ -1,6 +1,7 @@
 ## Custom
 tectonic.exe
-
+temp.*
+temp/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

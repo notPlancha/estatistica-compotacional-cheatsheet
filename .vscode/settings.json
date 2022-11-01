@@ -6,7 +6,8 @@
         "commands": [
             {
                 "cmd": "tectonic ${file}",
-                "match": "\\.tex$"
+                "match": "\\.tex$",
+                "notMatch": "\\*temp.tex$"
             }
         ],
         "autoClearConsole": true,

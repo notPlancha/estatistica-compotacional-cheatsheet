@@ -17,6 +17,12 @@
 \usepackage[none]{hyphenat}
 \usepackage{titlesec}
 \usepackage{fixmath}
+\usepackage{tikz}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{amssymb}
 % endregion
 \geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} % page margins
 \pagestyle{empty} % Turn off header and footer
@@ -29,6 +35,11 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt plus 0.5ex}
+\graphicspath{{./imgs/}}
+\newcommand{\incfig}[1]{% todo not working lol
+  \def\svgwidth{\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
 
 
 % -----------------------------------------------------------------------
@@ -131,20 +142,109 @@ $$\forall B \subseteq \Omega: P[B] = \sum_{i=1}^n P[A_i \cap B]$$
 $$\forall B \subseteq \Omega: P[B] = \sum_{i=1}^n P[A_i \mid B] \cdot P[B]$$
 Fórmula de Bayes:
 $$P[A_j \mid B] = \frac{P[A_j] \cdot P[B \mid A_j]}{\sum_{i=1}^n P[A_i] \cdot P[B \mid A_i]}$$
+\pagebreak
 \subsection{Variáveis aleatórias}
-TODO
+$$P[X = x] = P[A] = P[{\omega \in \Omega: X(\omega) = x}]$$
+\includegraphics[width=\columnwidth]{variaveisAleatorias.jpg} %TODO mudar para tex (geogebra?)
+\begin{tblr}{X l X[2]}\SetRow{m}
+  Variável aleatória & $X(\omega)\; \text{ou}\; X$ & Função que cada acontecimento $\omega$ associa um valor real $x = X(\omega)$ \\\SetRow{m}
+  CD de uma Variável aleatória & $X(\Omega)$ & 
+\end{tblr}
+\subsubsection{Função (massa) de probabilidade}
+X é discreto
+\begin{align*}
+  &f(x) = P[X = x] \\
+  &0 \leq f(x) \leq 1 \\
+  &\sum_{i=1}^n f(x_i) = 1 & \text{caso } n {\text{ finito}} \\
+  &\sum_{i=1}^{\infty} f(x_i) = 1 & \text{caso } n {\text{ infinito}} \\
+\end{align*}
+\subsubsection{Função densidade de probabilidade}
+X é contínuo, e é comum a função ser parametrizada (p.e. $f(x;\mu ,\sigma ^{2})$), dependendo da distribuição de X
+\begin{align*}
+  &f(x) = \frac {d}{dx}F(x) \\
+  &0 \leq f(x) \leq 1 \\
+  &\int_{-\infty}^{\infty} f(x) dx = 1 \\
+  &P[X = x] = 0 \; f(x) \neq 0
+\end{align*}
+\subsubsection{Função de distribuição (acomuldada) (f.d.p.)}
+A função é apenas crescente
+\begin{align*}
+  &F(x) = P[X \leq x] \\
+  &0 \leq F(x) \leq 1 \\
+  &\forall x_2 > x_1: \\
+    &\qquad F(x_2) \geq F(x_1) \\ 
+    &\qquad \land F(x_2) - F(x_1) = P[x_1 < X \leq x_2] \\
+  &\lim_{x \to -\infty} F(x) = 0 \\ 
+  &\lim_{x \to \infty} F(x) = 1 \\
+  &P[x_1 < X \leq x_2] = F(x_2) - F(x_1)
+\end{align*}
+Se $X$ for contínua:
+\begin{align*}
+  &F(x) = P[X \leq x] = \int_{-\infty}^x f(u) du \\
+  &P[x_1 < X \leq x_2] = \int_{x_1}^{x_2} f(u) du
+\end{align*}
+\includegraphics[width=\columnwidth]{fda.jpg} %TODO mudar para tex (geogebra?)
+\subsection{Função de probabilidade conjunta}
+Se discretas
+\begin{align*}
+  &f(x, y) = P[X = x, Y = y] = P[X = x \cap Y = y]\\
+  &0 \leq f(x, y) \leq 1 \\
+  &\sum_{i=1}^n \sum_{j=1}^n f(x_i, y_j) = 1 \\
+  &F(x, y) = P[X \leq x, Y \leq y] = \sum_{x_i \leq x} \sum_{y_j \leq y} f(x_i, y_j) \\
+  &\lim_{x \to -\infty \land y \to -\infty} F(x, y) = 0 \\
+  &\lim_{x \to \infty \land y \to \infty} F(x, y) = 1 \\
+  &\forall \lambda \in \mathbb{R}: \\
+    &\qquad \lim_{x \to -\infty } F(x, \lambda) = \lim_{y \to -\infty } F(\lambda, y) = 0 \\
+  &\forall x_2 > x_1 \land y_2 > y_1: F(x_2, y_2) \geq F(x_1, y_1)
+\end{align*}
+Se contínuas
 
+\begin{align*}
+  &f(x, y) = \frac{\partial^2 F(x, y)}{\partial x \partial y} \\
+  &F(x, y) = \int_{-\infty}^x \int_{-\infty}^y f(u, v) dv du \\
+\end{align*}
 
-
-
-
-
-
-
-
-
-
-
+\subsection{Parâmetros de v.a.s}
+\subsection{Valor esperado}
+O valor esperado de $X$ é igual à média de $X$.
+$$E[X] = \mu_X = \mu$$
+Se $X$ for discreta:
+$$E[X] = \sum_i x_i \cdot f(x_i)$$
+Se $X$ for contínua:
+$$E[X] = \int x \cdot f(x) dx$$
+\subsubsection{Propriedades}
+\begin{align*}
+  &E[\lambda] = \lambda \\
+  &E[\lambda X] = \lambda E[X] \\
+  &E[X \pm Y] = E[X] \pm E[Y] \\
+  &E[X Y] = E[X] E[Y] & \text{se } X \text{ e } Y \text{ forem independentes} \\
+  &E[g(X)] = \sum_i g(x_i) \cdot f(x_i) \iff \text{se } X \text{ for discreta} \\
+  &E[g(X)] = \int g(x) \cdot f(x) dx \iff \text{se } X \text{ for contínua} \\
+  &E[X^2] = \sum_i x_i^2 \cdot f(x_i) \iff \text{se } X \text{ for discreta}
+\end{align*}
+%TODO finish + organize Variancia 
+% aqui está apenas o importante para o teste
+\subsection{Variância}
+\begin{align*}
+  &VAR(X) = \sigma^2_X = \sigma^2 \\
+  &VAR(X) = E[(X - E[X])^2] \\
+  &VAR(X) = E[X^2] - E[X]^2 \\
+  &VAR(X) = E[X^2] - \mu^2 \\
+  &VAR(X) = \sum_i (x_i - \mu)^2 \cdot f(x_i) \iff \text{se } X \text{ for discreta} \\
+  &VAR(X) = \int (x - E[X])^2 \cdot f(x) dx \iff \text{se } X \text{ for contínua} \\
+  &VAR(\lambda) = 0 \\
+  &VAR(\lambda X) = \lambda^2 VAR(X) \\
+  &VAR(X \pm Y) = VAR(X) + VAR(Y) \pm 2 cov(X, Y) \\
+  &\sigma = \sqrt{VAR(X)} = \sqrt{\sigma^2} \\
+  &Cov(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] \\
+  &Cov(X, Y) = E[X \cdot Y] - \mu_x \cdot \mu_y \\
+  &Cov(X, Y) = 0 \iff X \text{ e } Y \text{ são independentes} \\
+\end{align*}
+% falta correlação linear mas n é preciso para este teste me thinks
+% also falta momentos mas reza
+% also desigualdades
+$$W = \frac{X - \mu_X}{\sigma}$$,
+$E(W) = 0$ e $VAR(W) = 1$.
 
 
 
