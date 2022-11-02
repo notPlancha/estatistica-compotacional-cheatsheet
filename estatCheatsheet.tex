@@ -40,7 +40,7 @@
   \def\svgwidth{\columnwidth}
   \import{./figures/}{#1.pdf_tex}
 }
-
+\newcommand{\aproxcap}{\, \mathring{\cap} \,}
 
 % -----------------------------------------------------------------------
 
@@ -163,7 +163,7 @@ X é contínuo, e é comum a função ser parametrizada (p.e. $f(x;\mu ,\sigma ^
 \begin{align*}
   &f(x) = \frac {d}{dx}F(x) \\
   &0 \leq f(x) \leq 1 \\
-  &\int_{-\infty}^{\infty} f(x) dx = 1 \\
+  &\int_{-\infty}^{\infty} f(x)/; dx = 1 \\
   &P[X = x] = 0 \; f(x) \neq 0
 \end{align*}
 \subsubsection{Função de distribuição (acomuldada) (f.d.p.)}
@@ -195,7 +195,7 @@ Se discretas
   &\lim_{x \to \infty \land y \to \infty} F(x, y) = 1 \\
   &\forall \lambda \in \mathbb{R}: \\
     &\qquad \lim_{x \to -\infty } F(x, \lambda) = \lim_{y \to -\infty } F(\lambda, y) = 0 \\
-  &\forall x_2 > x_1 \land y_2 > y_1: F(x_2, y_2) \geq F(x_1, y_1)
+  &\forall x_2 > x_1, y_2 > y_1: F(x_2, y_2) \geq F(x_1, y_1) \\
 \end{align*}
 Se contínuas
 
@@ -217,25 +217,25 @@ $$E[X] = \int x \cdot f(x) dx$$
   &E[\lambda] = \lambda \\
   &E[\lambda X] = \lambda E[X] \\
   &E[X \pm Y] = E[X] \pm E[Y] \\
-  &E[X Y] = E[X] E[Y] & \text{se } X \text{ e } Y \text{ forem independentes} \\
+  &E[X Y] = E[X] E[Y] \iff \text{se } X \text{ e } Y \text{ forem independentes} \\
   &E[g(X)] = \sum_i g(x_i) \cdot f(x_i) \iff \text{se } X \text{ for discreta} \\
   &E[g(X)] = \int g(x) \cdot f(x) dx \iff \text{se } X \text{ for contínua} \\
   &E[X^2] = \sum_i x_i^2 \cdot f(x_i) \iff \text{se } X \text{ for discreta}
 \end{align*}
-%TODO finish + organize Variancia 
+%TODO finish + organize variancia 
 % aqui está apenas o importante para o teste
 \subsection{Variância}
 \begin{align*}
-  &VAR(X) = \sigma^2_X = \sigma^2 \\
-  &VAR(X) = E[(X - E[X])^2] \\
-  &VAR(X) = E[X^2] - E[X]^2 \\
-  &VAR(X) = E[X^2] - \mu^2 \\
-  &VAR(X) = \sum_i (x_i - \mu)^2 \cdot f(x_i) \iff \text{se } X \text{ for discreta} \\
-  &VAR(X) = \int (x - E[X])^2 \cdot f(x) dx \iff \text{se } X \text{ for contínua} \\
-  &VAR(\lambda) = 0 \\
-  &VAR(\lambda X) = \lambda^2 VAR(X) \\
-  &VAR(X \pm Y) = VAR(X) + VAR(Y) \pm 2 cov(X, Y) \\
-  &\sigma = \sqrt{VAR(X)} = \sqrt{\sigma^2} \\
+  &\sigma^2_X = \sigma^2_X = \sigma^2 \\
+  &\sigma^2_X = E[(X - E[X])^2] \\
+  &\sigma^2_X = E[X^2] - E[X]^2 \\
+  &\sigma^2_X = E[X^2] - \mu^2 \\
+  &\sigma^2_X = \sum_i (x_i - \mu)^2 \cdot f(x_i) \iff \text{se } X \text{ for discreta} \\
+  &\sigma^2_X = \int (x - E[X])^2 \cdot f(x) dx \iff \text{se } X \text{ for contínua} \\
+  &\text{Var}(\lambda) = 0 \\
+  &\text{Var}(\lambda X) = \lambda^2 \sigma^2_X \\
+  &\text{Var}(X \pm Y) = \sigma^2_X + \sigma_Y^2 \pm 2 cov(X, Y) \\
+  &\sigma = \sqrt{\sigma^2} \\
   &Cov(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] \\
   &Cov(X, Y) = E[X \cdot Y] - \mu_x \cdot \mu_y \\
   &Cov(X, Y) = 0 \iff X \text{ e } Y \text{ são independentes} \\
@@ -243,11 +243,163 @@ $$E[X] = \int x \cdot f(x) dx$$
 % falta correlação linear mas n é preciso para este teste me thinks
 % also falta momentos mas reza
 % also desigualdades
+Sendo:
 $$W = \frac{X - \mu_X}{\sigma}$$,
-$E(W) = 0$ e $VAR(W) = 1$.
-
-
-
+$E(W) = 0$ e $\sigma_W^2 = 1$.
+\section{Distribuições teóricas discretas}
+\subsection{Uniforme}
+\begin{align*}
+  &f(x; N) = \begin{cases}
+    \frac{1}{N} & \text{se } x \in \{1, 2, \ldots, N\} \\
+    0 & \text{se não}
+  \end{cases} \\
+  &F(x; N) = \begin{cases}
+    0 & \text{se } x < 1 \\
+    \frac{x}{N} & \text{se } 1 \leq x \leq N \\
+    1 & \text{se } x > N
+  \end{cases} \\
+  &E[X] = \frac{N + 1}{2} \\
+  &\sigma^2_X = \frac{N^2 - 1}{12}
+\end{align*}
+\subsection{Distribuição de Bernoulli}
+A distribuição de Bernoulli é uma distribuição binomial
+\begin{align*}
+  &f(x; p) = \begin{cases}
+    1 - p & \text{se } x = 0 \\
+    p & \text{se } x = 1
+  \end{cases} \\
+  &f(x; p) =  p^x (1 - p)^{1 - x} \\
+  &F(x; p) = \begin{cases}
+    0 & \text{se } x < 0 \\
+    1-p & \text{se } 0 \leq x < 1 \\
+    1 & \text{se } x \geq 1
+  \end{cases} \\
+  &E[X] = p \\
+  &\sigma^2_X = p(1 - p)
+\end{align*}
+\subsection{Distribuição binomial}
+$$X \cap (n; p)$$
+\begin{align*}
+  &f(x; n, p) = \begin{cases}
+    \binom{n}{x} p^x (1 - p)^{n - x} & \text{se } x \in \{0, 1, \ldots, N\} \\
+    0 & \text{se não}
+  \end{cases} \\
+  &F(x; n, p) = \begin{cases}
+    0 & \text{se } x < 0 \\
+    \sum\limits_{i=0}^x \binom{n}{i} p^i (1 - p)^{n - i} & \text{se } 0 \leq x < n \\
+    1 & \text{se } x \geq n
+  \end{cases} \\
+  &E[X] = np \\
+  &\sigma^2_X = np(1 - p) \\
+  &\sum_{i=1}^k X_i \cap b\left(\sum^k_{i=1} n_i; p\right) \iff X_i \cap (n_i; p) \text{ são independentes}
+\end{align*}
+\subsection{Processo de Poisson}
+$$X \cap \text{p}(\lambda; t)$$
+\begin{align*}
+  &f(x; \lambda, t) = \begin{cases}
+    e^{-t\lambda}\frac{(t\lambda)^x}{x!} & \text{se } x \in \mathbb{N} \\
+    0 & \text{se não}
+  \end{cases} \\
+  &F(x; \lambda, t) = \begin{cases}
+    0 & \text{se } x < 0 \\
+    e^{-t\lambda} \sum\limits_{i=0}^x \frac{(t\lambda)^i}{i!} & \text{se } 0 \leq x < \infty \\
+    1 & \text{se } x \geq \infty
+  \end{cases} \\
+  &E[X] = t\lambda \\
+  &\sigma^2_X = t\lambda \\
+  &\sum_{i=1}^k X_i \cap p\left(\sum^k_{i=1} t_i\lambda_i\right) \iff X_i \cap \text{p}(\lambda_i, t_i) \text{ são independentes}
+\end{align*}
+\subsection{Distribuição de Poisson}
+A distribuição de Poisson é um processo de Poisson onde t = 1
+$$X \cap \text{p}(\lambda)$$
+A distribuição binomial converge para a distribuição de Poisson quando $n \to \infty$ e $p \to 0$, sendo $\lambda = np$ constante.
+$$\lim_{n \to \infty} \text{b}(n; p)= \text{p}(\lambda = np)$$
+% falta multinomial e binomial negativa e geométrica e hipergeométrica mas n sai
+\section{Distribuições teóricas contínuas}
+\subsection{Uniforme}
+\begin{align*}
+  &f(x; a, b) = \begin{cases}
+    \frac{1}{b - a} & \text{se } a \leq x \leq b \\
+    0 & \text{se } x < a \text{ ou } x > b
+  \end{cases} \\
+  &F(x; a, b) = \begin{cases}
+    0 & \text{se } x < a \\
+    \frac{x - a}{b - a} & \text{se } a \leq x \leq b \\
+    1 & \text{se } x > b
+  \end{cases} \\
+  &E[X] = \frac{a + b}{2} \\
+  &\sigma^2_X = \frac{(b - a)^2}{12}
+\end{align*}
+\subsection{Normal}
+$X \cap \text{n}(\mu, \sigma)$
+\begin{align*}
+  &f(x; \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \cdot \text{exp}\left(-\frac{1}{2}\left(\frac{(x - \mu)}{\sigma}\right)^2\right) \\
+  &E[X] = \mu \\
+  &\sigma^2_X = \sigma^2
+\end{align*}
+A normal normalmente transforma-se na normal padrão, com $\mu_Z = 0$ e $\sigma_Z = 1$, onde $Z = \frac{X - \mu_X}{\sigma_X}$.
+$F(x) -> \phi(z)$, $ f(x) -> \varphi(z)$ e $F^{-1}(x) -> \phi^{-1}(z)$ (função quartil)
+\begin{align*}
+  &\varphi(z) = \frac{1}{\sqrt{2\pi}} \cdot \text{exp}\left(-\frac{1}{2}z^2\right) \\
+  &P[\mu - \sigma < X < \mu + \sigma] = P[-1 < Z < 1] \approx 0.68 \\
+  &P[\mu - 2\sigma < X < \mu + 2\sigma] = P[-2 < Z < 2] \approx 0.95 \\
+  &P[\mu - 3\sigma < X < \mu + 3\sigma] = P[-3 < Z < 3] \approx 0.99 \\
+  &\phi^{-1}(0.95) = 1.645 \\
+  &\phi^{-1}(0.99) = 2.326 % TODO verificar
+\end{align*}
+Aditividade:
+\begin{align*}
+  & T = \sum^k_{i=1} X_i \cap \text{n}\left(k \mu; \sigma \sqrt{k}\right) \\ & \qquad \iff X_i \cap \text{n}(\mu, \sigma) \text{ são independentes}\\
+  & T = \sum^k_{i=1} a_i X_i \cap \text{n}\left(\sum a_i \mu_i; \sqrt{\sum a_i^2 \sigma_i^2}\right) \\
+  & \left(X_1 \pm X_2\right) \cap \text{n}\left(\mu_1 \pm \mu_2; \sqrt{\sigma_1^2 + \sigma_2^2}\right) \\
+  & X \aproxcap \text{n}(n p; \sqrt{np(1 - p)}) \iff \\ 
+    &\qquad \iff X \cap \text{b}(n, p), n \to \infty, 0.1 < p < 0.9 \\
+  & X \aproxcap \text{n}(\lambda; \sqrt{\lambda}) \iff \\ 
+  &\qquad \iff X \cap \text{p}(\lambda), \lambda \to \infty
+\end{align*}
+Em termos práticos, $k \to \infty$ significa $k > 30$
+\section{Amostras}
+\subsection{Amostras aleatórias}
+A variável aleatória $(X_1, X_2, \ldots, X_n)$ é uma amostra aleatória de uma população se:
+$$f(x_1, x_2, \ldots, x_n) = \prod(f(x_i))$$
+, onde $X_1$ é o primeiro elemento da amostra, $X_2$ o segundo e $X_n$ o n-ésimo. \\
+Cada estatística (amostral) é uma variável aleatória
+ \begin{align*}
+  &\overline{X} = \frac{1}{n} \sum^n_{i=1} X_i & \text{Média amostral} \\
+  &S^2 = \frac{1}{n} \sum^n_{i=1} \left(X_i - \overline{X}\right)^2 & \text{Variância amostral} \\
+  &S^{'2} = \frac{1}{n - 1} \sum^n_{i=1} \left(X_i - \overline{X}\right)^2 & \text{Variância amostral corrigida}
+\end{align*}
+\subsection{Teorema do limite central}
+\begin{flalign*}
+  &\frac{\sum \left(X_i\right) - n \mu}{\sigma\sqrt{n}} \aproxcap \text{n}(0, 1)&& \\
+  &\sum{X_i} \aproxcap \text{n}\left(n\mu, \sigma\sqrt{n}\right)&& \\
+  &\text{Como } \frac{\sum{X_i}}{n} = \overline{X}: &&\\
+    &\qquad \overline{X} \aproxcap \text{n}\left(\mu, \frac{\sigma}{\sqrt{n}}\right)&&
+\end{flalign*}
+Se e apenas se:
+\begin{flalign*}
+  &E[X_1] = E[X_2] = \ldots = E[X_n] = \mu, && \\
+  &\text{Var}[X_1] = \text{Var}[X_2] = \ldots = \text{Var}[X_n] = \sigma^2, && \\
+  &n \to \infty. &&
+\end{flalign*}
+% TODO falta t student e a outra q ainda n percebi o q sai disso
+\subsection{Distribuições de amostras de populações}
+\subsubsection{Populações Bernoulli}
+\begin{align*}
+  \overline{X} &\aproxcap \text{n}\left(p, \sqrt{\frac{pq}{n}}\right) \\
+  \left(\overline{X_1} - \overline{X_2}\right) &\aproxcap \text{n}\left(p_1 - p_2, \sqrt{\frac{p_1 q_1}{n_1} + \frac{p_2 q_2}{n_2}}\right) \\
+\end{align*}
+\subsubsection{Populações normais}
+\begin{align*}
+  &\text{quando } \sigma^2 \text{ é conhecida:} \\
+    &\qquad \overline{X} \aproxcap \text{n}\left(\mu, \frac{\sigma}{\sqrt{n}}\right) \\
+  &\text{quando } \sigma^2 \text{ é desconhecida:} \\
+    &\qquad \frac{\overline{X} - \mu}{\frac{S'}{\sqrt{n}}} \aproxcap \text{t}_{n-1} \\
+  &\frac{(n-1)S^{'2}}{\sigma^2} \aproxcap \chi^2_{n-1} \\
+  &\frac{n S^2}{\sigma^2} \aproxcap \chi^2_{n-1} \\
+  &\overline{X_1} - \overline{X_2} \cap \text{n}\left(\mu_1 - \mu_2, \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}\right) \\
+  &\overline{X_1} - \overline{X_2} \aproxcap \text{n}\left(\mu_1 - \mu_2, \sqrt{\frac{S_1^{'2}}{n_1} + \frac{S_2^{'2}}{n_2}}\right)
+\end{align*}
 \section{temp}
 \blinddocument
 \end{multicols}
