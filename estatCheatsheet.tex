@@ -41,7 +41,7 @@
   \import{./figures/}{#1.pdf_tex}
 }
 \newcommand{\aproxcap}{\, \mathring{\cap} \,}
-
+\newcommand{\estimador}{\hat{\theta}}
 % -----------------------------------------------------------------------
 
 \begin{document}
@@ -57,7 +57,7 @@
 \begin{center}
   \Large{\textbf{Estatística Computacional}} \\
   \small{Plancha; 105289; CDB2} \\
-  \small{Versão 0.1}
+  \small{Versão 1.0}
 \end{center}
 
 \section{Teoria de Probabilidades}
@@ -345,7 +345,9 @@ $F(x) -> \phi(z)$, $ f(x) -> \varphi(z)$ e $F^{-1}(x) -> \phi^{-1}(z)$ (função
   &P[\mu - 2\sigma < X < \mu + 2\sigma] = P[-2 < Z < 2] \approx 0.95 \\
   &P[\mu - 3\sigma < X < \mu + 3\sigma] = P[-3 < Z < 3] \approx 0.99 \\
   &\phi^{-1}(0.95) = 1.645 \\
-  &\phi^{-1}(0.99) = 2.326 % TODO verificar
+  &\phi^{-1}(0.99) = 2.326 \\
+  &\phi^{-1}(0.95 + \sfrac{0.05}{2}) = 1.96 \\
+  &\phi^{-1}(0.995) = 2.576
 \end{align*}
 Aditividade:
 \begin{align*}
@@ -400,7 +402,78 @@ Se e apenas se:
   &\overline{X_1} - \overline{X_2} \cap \text{n}\left(\mu_1 - \mu_2, \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}\right) \\
   &\overline{X_1} - \overline{X_2} \aproxcap \text{n}\left(\mu_1 - \mu_2, \sqrt{\frac{S_1^{'2}}{n_1} + \frac{S_2^{'2}}{n_2}}\right)
 \end{align*}
-\section{temp}
-\blinddocument
+
+\subsection{Estimação de parâmetros}
+
+Um estimador para um parâmetro $\theta$ designa-se por $\estimador = \estimador(X_1, X_2, \ldots X_n)$ e é uma v.a. em função de uma amostra.A estimativa representa-se por $\estimador^*$. \\
+Erro amostral $ = \estimador - 0 $\\
+Envesiamento $ = \text{env}(\estimador) = E[\estimador] - \theta $\\
+\subsubsection{Propriedades}
+Considera-se que o estimador $\estimador_1$ é preferivel ao estimador $\estimador_2$ para um intervalo $[a, b]$ se:
+$$P[a < \estimador_1 < b] > P[a < \estimador_2 < b]$$ \\
+\begin{enumerate}
+  \item[] $\estimador$ é não enviesado/centardo se $E[\estimador] = \theta$
+  \item[] $\estimador_1$ é mais eficiente que $\estimador_2$ se $Var  [\estimador_1] \leq Var[\estimador_2]$, se ambos forem enviesados ou consistentes em média quadrática. \\
+  \item[] $\estimador$ é suficiente se utiliza toda a informação disponível na  amostra. \\
+  \item[] Para amostras grandes ($\estimador_n$),:
+  \begin{enumerate}
+    \item[] $\estimador_n$ é não enviesado assintoticamente se: $$lim_{n \to \infty} E[\estimador_n] = \theta$$
+    \item[] $\estimador_n$ é consistente simples se $$lim_{n \to \infty} P[\left| \estimador_n - \theta \right| \leq \epsilon] = 1 \forall \epsilon > 0$$
+    \item[] $\estimador_n$ é consistente em média quadrática se $$lim_{n \to \infty} E\left[\left(\estimador_n - \theta\right)^2\right] =$$ $$= lim_{n \to \infty}\left( \text{Var}[\estimador_n] = 0 + \left(\text{env}(\estimador_n)\right)^2\right) = 0$$
+  \end{enumerate}
+\end{enumerate}
+\subsubsection{Estimação por intervalos}
+Dado uma variável fulcral $Z$, :
+$$P\left[-\phi^{-1}(\lambda + \sfrac{1 - \lambda}{2}) < Z < \phi^{-1}(\lambda + \sfrac{1 - \lambda}{2})\right] = \lambda$$
+; Sendo $\lambda$ o nível de confiança. Ou seja, a probabilidade do intervalo $]I_{\lambda}[_\theta$ de conter o parâmetro $\theta$ é $\lambda$. Por outras palavras, se fossem recolhidas n amostras aleatórias e fosse calculado o intervalo, $100\lambda\%$ desses intervalos conteriam o parâmetro $\theta$. \\
+\subsubsection{Variáveis fulcrais}
+\begin{tblr}{X|c|c|c}
+  Variável Fulcral & $\theta$ & População & Dimensão  \\
+  $\frac{\overline{x} - \mu}{\frac{\sigma}{\sqrt{n}}} \cap \text{n}(0,1) $ & $\mu$      & Normal   & Qualquer  \\ 
+  $\frac{\overline{x} - \mu}{\frac{\sigma}{\sqrt{n}}} \aproxcap \text{n}(0,1) $ & $\mu$ & Qualquer & $n>30$   \\
+  $\frac{\overline{x} - \mu}{\frac{s'}{\sqrt{n}}} \cap \text{t}_{n-1}$ & $\mu$         & Normal   & Qualquer \\
+  $\frac{\overline{x} - \mu}{\frac{s}{\sqrt{n}}} \aproxcap \text{n}(0,1) $ & $\mu$      & Qualquer & $n>30$  \\
+%  $\frac{\overline{x_1} - \overline{x_2} - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \cap$ & $\mu_1 - \mu_2$ & Normal & Qualquer \\
+\end{tblr}
+\includegraphics[width=\columnwidth]{table1.png}
+\includegraphics[width=\columnwidth]{table2.png}
+Com construir um intervalo de confiança:
+\begin{enumerate}
+  \setcounter{enumi}{1}
+  \item Definição da população, da sua distribuição e do parâmetro a estimar.
+  \item Escolha da variável fulcral.
+  \item Determinação da distribuição amostral da variável fulcral.
+  \item Escolha do nível de confiança.
+  \item Construção do intervalo aleatório.
+  \item Determinação dos limites do intervalo aleatório.
+  \item Determinação dos limites do intervalo de confiança concretos.
+\end{enumerate}
+O intervalo concreto representa-se por $]I_\lambda[^*_\theta$, e o erro representa o que está a direita de $\theta$ no meu intervalo (p.e.: $$]\overline{X} - \frac{z \sigma}{\sqrt{n}}, \overline{X} + \frac{z \sigma}{\sqrt{n}}[ \iff \text{erro de estimação} = \frac{z \sigma}{\sqrt{n}}$$)
+\section{Ensaio de hipóteses}
+Hipótese em questão: $H_0$ (Hipótese nula) \\
+Hipótese alternativa: $H_a$ \\
+Quando as provas são incompatíveis com $H_0$, então rejeita-se $H_0$; se tal não acontecer, não se rejeita $H_0$. \\
+Quando a decisão é errada: \\
+Erro tipo I: $H_0$ é rejeitada quando é verdadeira. \\
+Erro tipo II: $H_0$ não é rejeitada quando é falsa. \\
+Nota: $H_0$ contem sempre a igualdade. \\
+\subsection{Passos}
+\begin{enumerate}
+  \setcounter{enumi}{1}
+  \item Formulação das hipóteses
+  \item Escolha do nível de significância $\alpha$.
+  \item[] $\alpha = P[\text{erro tipo I}] = P[\text{rejeitar} H_0 | H_0 \text{ é verdadeira}]$
+  \item[] $\alpha = F(\overline{x}_c) \equiv \overline{x}_c = F^{-1}(\alpha; \mu_{\overline{x}}, \sigma_{\overline{x}})$
+  \item[] $\overline{x}_c = \mu_{\overline{x}} + \phi^{-1}(\alpha)\sigma_{\overline{x}}$
+  \item Escolha da estatística e estabelecer a regra de decisão.
+  \item[] RC - região crítica ou de rejeição; Ra - região de aceitação ou de não aceitação.
+  \item[] Literalemngte dizer "Se $\estimador \in RC$, rejeitar $H_0$; se $\estimador \in Ra$,  não se rejeita $H_0$." ( sem ser com in se possivel)
+  \item[] Alternativamente dizer "Se $Z \in RC$, rejeitar $H_0$ etc"
+  \item Tomada de decisão.
+\end{enumerate}
+\includegraphics[width=\columnwidth]{table3.png}
+e o resto é igual só que o parâmetro é substituido pelo ponto a estimar \\
+p.e.: $H_0: \mu = 5$, então $\mu_0 = 5$ \\
+Quando é $\mu_1 - \mu_2$ é o parâmetro, então fica $(\mu_1 - \mu_2)_0$ \\
 \end{multicols}
 \end{document}
